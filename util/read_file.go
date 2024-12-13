@@ -10,15 +10,17 @@ type Solution interface {
 	Solve(string)
 }
 
-func ReadLinesInFile(path string, cb func (line string)) {
+func ReadLinesInFile(path string, cb func (line string, index int)) {
     file, err := os.Open(path)
     if err != nil {
         fmt.Println(err)
     }
     fileScanner := bufio.NewScanner(file)
     fileScanner.Split(bufio.ScanLines)
+    index := 0
     for fileScanner.Scan() {
-        cb(fileScanner.Text())
+        cb(fileScanner.Text(), index)
+        index++
     }
 }
 
